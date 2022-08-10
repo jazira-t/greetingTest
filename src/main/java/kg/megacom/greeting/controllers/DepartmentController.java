@@ -2,6 +2,9 @@ package kg.megacom.greeting.controllers;
 
 import kg.megacom.greeting.controllers.base.CrudMethods;
 import kg.megacom.greeting.models.Department;
+import kg.megacom.greeting.services.DepartmentService;
+import kg.megacom.greeting.services.PositionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,12 +14,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/department")
 public class DepartmentController implements CrudMethods<Department> {
+
+    @Autowired
+    private DepartmentService departmentService;
     @Override
     public List<Department> findAll() {
-        return Arrays.asList(
-                new Department(1L, "Backend developers", true),
-                new Department(2L, "Frontend developers", true),
-                new Department(3L, "Administration", true));
+        return departmentService.findAll();
     }
 
     @Override
@@ -26,14 +29,12 @@ public class DepartmentController implements CrudMethods<Department> {
 
     @Override
     public Department save(Department department) {
-        department.setId(10L);
-        return department;
+        return departmentService.save(department);
     }
 
     @Override
     public Department update(Department department) {
-        department.setName("Administration");
-        return department;
+        return departmentService.update(department);
     }
 
     @Override
